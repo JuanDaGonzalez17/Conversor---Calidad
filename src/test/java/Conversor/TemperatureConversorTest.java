@@ -3,6 +3,7 @@ package Conversor;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.function.Executable;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -87,9 +88,11 @@ class TemperatureConversorTest {
         // Arrange
         double celsius = -300.0;
 
-        // Act & Assert
-        assertThrows(IllegalArgumentException.class,
-                () -> conversor.convertirCelsius_Farenheit(celsius));
+        // Act
+        Executable operacion = () -> conversor.convertirCelsius_Farenheit(celsius);
+
+        // Assert
+        assertThrows(IllegalArgumentException.class, operacion);
     }
 
     @Test
@@ -98,9 +101,11 @@ class TemperatureConversorTest {
         // Arrange
         double celsius = Double.NaN;
 
-        // Act & Assert
-        assertThrows(IllegalArgumentException.class,
-                () -> conversor.convertirCelsius_Farenheit(celsius));
+        // Act
+        Executable operacion = () -> conversor.convertirCelsius_Farenheit(celsius);
+
+        // Assert
+        assertThrows(IllegalArgumentException.class, operacion);
     }
 
     @Test
@@ -109,9 +114,11 @@ class TemperatureConversorTest {
         // Arrange
         double celsius = Double.POSITIVE_INFINITY;
 
-        // Act & Assert
-        assertThrows(IllegalArgumentException.class,
-                () -> conversor.convertirCelsius_Farenheit(celsius));
+        // Act
+        Executable operacion = () -> conversor.convertirCelsius_Farenheit(celsius);
+
+        // Assert
+        assertThrows(IllegalArgumentException.class, operacion);
     }
 
     @Test
@@ -120,9 +127,11 @@ class TemperatureConversorTest {
         // Arrange
         double celsius = Double.NEGATIVE_INFINITY;
 
-        // Act & Assert
-        assertThrows(IllegalArgumentException.class,
-                () -> conversor.convertirCelsius_Farenheit(celsius));
+        // Act
+        Executable operacion = () -> conversor.convertirCelsius_Farenheit(celsius);
+
+        // Assert
+        assertThrows(IllegalArgumentException.class, operacion);
     }
 
     // ---------------------------------------------------------
@@ -177,9 +186,11 @@ class TemperatureConversorTest {
         // Arrange
         double fahrenheit = -500.0;
 
-        // Act & Assert
-        assertThrows(IllegalArgumentException.class,
-                () -> conversor.convertirFahrenheit_Celsius(fahrenheit));
+        // Act
+        Executable operacion = () -> conversor.convertirFahrenheit_Celsius(fahrenheit);
+
+        // Assert
+        assertThrows(IllegalArgumentException.class, operacion);
     }
 
     @Test
@@ -188,9 +199,11 @@ class TemperatureConversorTest {
         // Arrange
         double fahrenheit = Double.NaN;
 
-        // Act & Assert
-        assertThrows(IllegalArgumentException.class,
-                () -> conversor.convertirFahrenheit_Celsius(fahrenheit));
+        // Act
+        Executable operacion = () -> conversor.convertirFahrenheit_Celsius(fahrenheit);
+
+        // Assert
+        assertThrows(IllegalArgumentException.class, operacion);
     }
 
     @Test
@@ -199,9 +212,11 @@ class TemperatureConversorTest {
         // Arrange
         double fahrenheit = Double.POSITIVE_INFINITY;
 
-        // Act & Assert
-        assertThrows(IllegalArgumentException.class,
-                () -> conversor.convertirFahrenheit_Celsius(fahrenheit));
+        // Act
+        Executable operacion = () -> conversor.convertirFahrenheit_Celsius(fahrenheit);
+
+        // Assert
+        assertThrows(IllegalArgumentException.class, operacion);
     }
 
     // ---------------------------------------------------------
@@ -242,9 +257,11 @@ class TemperatureConversorTest {
         // Arrange
         double fahrenheit = -460.0;
 
-        // Act & Assert
-        assertThrows(IllegalArgumentException.class,
-                () -> conversor.convertirFahrenheit_Kelvin(fahrenheit));
+        // Act
+        Executable operacion = () -> conversor.convertirFahrenheit_Kelvin(fahrenheit);
+
+        // Assert
+        assertThrows(IllegalArgumentException.class, operacion);
     }
 
     @Test
@@ -253,9 +270,11 @@ class TemperatureConversorTest {
         // Arrange
         double fahrenheit = Double.NaN;
 
-        // Act & Assert
-        assertThrows(IllegalArgumentException.class,
-                () -> conversor.convertirFahrenheit_Kelvin(fahrenheit));
+        // Act
+        Executable operacion = () -> conversor.convertirFahrenheit_Kelvin(fahrenheit);
+
+        // Assert
+        assertThrows(IllegalArgumentException.class, operacion);
     }
 
     // ---------------------------------------------------------
@@ -296,9 +315,11 @@ class TemperatureConversorTest {
         // Arrange
         double celsius = -274.0;
 
-        // Act & Assert
-        assertThrows(IllegalArgumentException.class,
-                () -> conversor.convertirCelsius_Kelvin(celsius));
+        // Act
+        Executable operacion = () -> conversor.convertirCelsius_Kelvin(celsius);
+
+        // Assert
+        assertThrows(IllegalArgumentException.class, operacion);
     }
 
     @Test
@@ -307,9 +328,11 @@ class TemperatureConversorTest {
         // Arrange
         double celsius = Double.NEGATIVE_INFINITY;
 
-        // Act & Assert
-        assertThrows(IllegalArgumentException.class,
-                () -> conversor.convertirCelsius_Kelvin(celsius));
+        // Act
+        Executable operacion = () -> conversor.convertirCelsius_Kelvin(celsius);
+
+        // Assert
+        assertThrows(IllegalArgumentException.class, operacion);
     }
 
     // ---------------------------------------------------------
@@ -350,9 +373,11 @@ class TemperatureConversorTest {
         // Arrange
         double kelvin = -1.0;
 
-        // Act & Assert
-        assertThrows(IllegalArgumentException.class,
-                () -> conversor.convertirKelvin_Celsius(kelvin));
+        // Act
+        Executable operacion = () -> conversor.convertirKelvin_Celsius(kelvin);
+
+        // Assert
+        assertThrows(IllegalArgumentException.class, operacion);
     }
 
     @Test
@@ -361,9 +386,11 @@ class TemperatureConversorTest {
         // Arrange
         double kelvin = Double.NaN;
 
-        // Act & Assert
-        assertThrows(IllegalArgumentException.class,
-                () -> conversor.convertirKelvin_Celsius(kelvin));
+        // Act
+        Executable operacion = () -> conversor.convertirKelvin_Celsius(kelvin);
+
+        // Assert
+        assertThrows(IllegalArgumentException.class, operacion);
     }
 
     // ---------------------------------------------------------
@@ -404,9 +431,11 @@ class TemperatureConversorTest {
         // Arrange
         double kelvin = -10.0;
 
-        // Act & Assert
-        assertThrows(IllegalArgumentException.class,
-                () -> conversor.convertirKelvin_Fahrenheit(kelvin));
+        // Act
+        Executable operacion = () -> conversor.convertirKelvin_Fahrenheit(kelvin);
+
+        // Assert
+        assertThrows(IllegalArgumentException.class, operacion);
     }
 
     @Test
@@ -415,9 +444,11 @@ class TemperatureConversorTest {
         // Arrange
         double kelvin = Double.POSITIVE_INFINITY;
 
-        // Act & Assert
-        assertThrows(IllegalArgumentException.class,
-                () -> conversor.convertirKelvin_Fahrenheit(kelvin));
+        // Act
+        Executable operacion = () -> conversor.convertirKelvin_Fahrenheit(kelvin);
+
+        // Assert
+        assertThrows(IllegalArgumentException.class, operacion);
     }
 
     // ---------------------------------------------------------

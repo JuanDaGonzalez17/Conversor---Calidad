@@ -18,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  *   mvn test -DexcludedGroups="performance"  (to skip these in normal builds)
  */
 @Tag("performance")
-class WeightConversorPerformanceTest {
+class   WeightConversorPerformanceTest {
 
     private WeightConversor conversor;
     private static final int ITERACIONES = 1_000_000;
