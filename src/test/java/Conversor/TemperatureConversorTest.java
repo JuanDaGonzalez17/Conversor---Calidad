@@ -89,10 +89,10 @@ class TemperatureConversorTest {
         double celsius = -300.0;
 
         // Act
-        Executable operacion = () -> conversor.convertirCelsius_Farenheit(celsius);
+       // Executable operacion = ;
 
         // Assert
-        assertThrows(IllegalArgumentException.class, operacion);
+        assertThrows(IllegalArgumentException.class, () -> conversor.convertirCelsius_Farenheit(celsius));
     }
 
     @Test

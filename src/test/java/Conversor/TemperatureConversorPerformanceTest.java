@@ -26,7 +26,7 @@ class TemperatureConversorPerformanceTest {
 
     private TemperatureConversor conversor;
     private static final int ITERACIONES = 1_000_000;
-    private static final long LIMITE_MS = 2000; // 2 seconds for 1M calls
+    private static final long LIMITE_MS = 500; // 0.5 seconds for 1M calls
 
     @BeforeEach
     void setUp() {

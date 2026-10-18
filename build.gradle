@@ -1,7 +1,9 @@
 plugins {
 	id 'java'
+	id 'jacoco'
 	id 'org.springframework.boot' version '4.1.0'
 	id 'io.spring.dependency-management' version '1.1.7'
+	id 'org.sonarqube' version '7.5.0.8588'
 }
 
 group = 'com.udea'
@@ -22,12 +24,53 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
     testImplementation 'org.junit.jupiter:junit-jupiter:5.10.2'
+	testImplementation 'com.intuit.karate:karate-junit5:1.4.1'
+}
+
+sourceSets {
+	test {
+		resources {
+			srcDir file('src/test/java')
+			exclude '**/*.java'
+		}
+	}
 }
 
 test{
     useJUnitPlatform()
+	exclude 'acceptance/**'
+	finalizedBy jacocoTestReport
 }
 
+jacocoTestReport{
+	dependsOn test
+	reports {
+		xml.required.set(true)
+		csv.required.set(false)
+		html.required.set(true)	}
+}
+
+// Acceptance tests con Karate
+tasks.register('acceptanceTest', Test) {
+	description = 'Corre los acceptance tests con Karate'
+	group = 'verification'
+	useJUnitPlatform()
+	testClassesDirs = sourceSets.test.output.classesDirs
+	classpath = sourceSets.test.runtimeClasspath
+	include 'acceptance/**'
+	systemProperty 'karate.baseUrl', System.getProperty('karate.baseUrl', 'http://localhost:8080')
+	outputs.upToDateWhen { false }
+}
+
+// SonarCloud
+sonar {
+	properties {
+		property 'sonar.organization', 'TU_ORGANIZACION'
+		property 'sonar.projectKey', 'TU_PROJECT_KEY'
+		property 'sonar.host.url', 'https://sonarcloud.io'
+		property 'sonar.coverage.jacoco.xmlReportPaths', 'build/reports/jacoco/test/jacocoTestReport.xml'
+	}
+}
 //tasks.named('test') {
 //	useJUnitPlatform()
 //}
