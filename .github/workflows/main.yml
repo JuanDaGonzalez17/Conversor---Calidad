@@ -1,0 +1,66 @@
+name: main
+
+on:
+  push:
+    branches: [ main ]        # trunk
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0       # necesario para SonarCloud
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21     # cambia a tu versión
+
+      - uses: gradle/actions/setup-gradle@v4
+
+      - name: Permisos a gradlew
+        run: chmod +x gradlew
+
+      # 1. Unit tests + coverage + empaquetado (genera el artefacto)
+      - name: Build y unit tests
+        run: ./gradlew build jacocoTestReport
+
+      # 2. Análisis estático en SonarCloud
+      - name: SonarCloud
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: ./gradlew sonar
+
+      # 3. Acceptance tests con Karate contra la app levantada
+      - name: Levantar aplicación
+        run: |
+          JAR=$(ls build/libs/*.jar | grep -v plain | head -n 1)
+          nohup java -jar "$JAR" > app.log 2>&1 &
+          for i in {1..30}; do
+            curl -s http://localhost:8080 > /dev/null && break
+            sleep 2
+          done
+
+      - name: Acceptance tests (Karate)
+        run: ./gradlew acceptanceTest -Dkarate.baseUrl=http://localhost:8080
+
+      # 4. Guardar artefacto y reportes
+      - name: Subir artefacto
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-jar
+          path: build/libs/*.jar
+
+      - name: Subir reportes
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: reportes
+          path: |
+            build/karate-reports
+            build/reports/jacoco
+            build/reports/tests
