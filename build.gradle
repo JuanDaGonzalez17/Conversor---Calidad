@@ -65,8 +65,8 @@ tasks.register('acceptanceTest', Test) {
 // SonarCloud
 sonar {
 	properties {
-		property 'sonar.organization', 'TU_ORGANIZACION'
-		property 'sonar.projectKey', 'TU_PROJECT_KEY'
+		property 'sonar.organization', 'juandagonzalez17'
+		property 'sonar.projectKey', 'JuanDaGonzalez17_Conversor---Calidad'
 		property 'sonar.host.url', 'https://sonarcloud.io'
 		property 'sonar.coverage.jacoco.xmlReportPaths', 'build/reports/jacoco/test/jacocoTestReport.xml'
 	}
