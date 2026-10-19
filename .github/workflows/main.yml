@@ -28,6 +28,10 @@ jobs:
       - name: Build y unit tests
         run: ./gradlew build jacocoTestReport
 
+      # 1b. Pruebas de rendimiento (separadas de las unitarias)
+      - name: Pruebas de rendimiento
+        run: ./gradlew performanceTest
+
       # 2. Análisis estático en SonarCloud
       - name: SonarCloud
         env:
@@ -36,17 +40,27 @@ jobs:
         run: ./gradlew sonar
 
       # 3. Acceptance tests con Karate contra la app levantada
-      - name: Levantar aplicación
+      - name: Levantar API
         run: |
-          JAR=$(ls build/libs/*.jar | grep -v plain | head -n 1)
+          JAR=$(ls build/libs/*.jar | head -n 1)
           nohup java -jar "$JAR" > app.log 2>&1 &
           for i in {1..30}; do
-            curl -s http://localhost:8080 > /dev/null && break
+            if curl -sf "http://localhost:8080/api/peso?origen=gramos&destino=libras&valor=0" > /dev/null; then
+              echo "API arriba"
+              exit 0
+            fi
             sleep 2
           done
+          echo "La API no respondio a tiempo"
+          cat app.log
+          exit 1
 
       - name: Acceptance tests (Karate)
         run: ./gradlew acceptanceTest -Dkarate.baseUrl=http://localhost:8080
+
+      - name: Log de la aplicación
+        if: failure()
+        run: cat app.log || true
 
       # 4. Guardar artefacto y reportes
       - name: Subir artefacto

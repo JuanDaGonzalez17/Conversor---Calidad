@@ -20,7 +20,8 @@ repositories {
 }
 
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter'
+	// API REST (incluye Tomcat embebido y Jackson)
+	implementation 'org.springframework.boot:spring-boot-starter-webmvc'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
     testImplementation 'org.junit.jupiter:junit-jupiter:5.10.2'
@@ -36,21 +37,43 @@ sourceSets {
 	}
 }
 
-test{
-    useJUnitPlatform()
+// Solo se genera el jar ejecutable (bootJar), no el "-plain.jar"
+tasks.named('jar') {
+	enabled = false
+}
+
+// Unit tests: excluye acceptance (Karate) y pruebas de rendimiento
+test {
+	useJUnitPlatform {
+		excludeTags 'performance'
+	}
 	exclude 'acceptance/**'
 	finalizedBy jacocoTestReport
 }
 
-jacocoTestReport{
+jacocoTestReport {
 	dependsOn test
 	reports {
 		xml.required.set(true)
 		csv.required.set(false)
-		html.required.set(true)	}
+		html.required.set(true)
+	}
 }
 
-// Acceptance tests con Karate
+// Pruebas de rendimiento (@Tag("performance"))
+tasks.register('performanceTest', Test) {
+	description = 'Corre las pruebas de rendimiento'
+	group = 'verification'
+	testClassesDirs = sourceSets.test.output.classesDirs
+	classpath = sourceSets.test.runtimeClasspath
+	useJUnitPlatform {
+		includeTags 'performance'
+	}
+	exclude 'acceptance/**'
+	outputs.upToDateWhen { false }
+}
+
+// Acceptance tests con Karate contra la API levantada en karate.baseUrl
 tasks.register('acceptanceTest', Test) {
 	description = 'Corre los acceptance tests con Karate'
 	group = 'verification'
@@ -71,6 +94,3 @@ sonar {
 		property 'sonar.coverage.jacoco.xmlReportPaths', 'build/reports/jacoco/test/jacocoTestReport.xml'
 	}
 }
-//tasks.named('test') {
-//	useJUnitPlatform()
-//}

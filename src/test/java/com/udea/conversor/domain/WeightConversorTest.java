@@ -1,4 +1,4 @@
-package Conversor;
+package com.udea.conversor.domain;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -34,7 +34,7 @@ class WeightConversorTest {
         double esperado = 1.0;
 
         // Act
-        double resultado = conversor.convertirGramos_Libras(gramos);
+        double resultado = conversor.gramosALibras(gramos);
 
         // Assert
         assertEquals(esperado, resultado, DELTA);
@@ -48,7 +48,7 @@ class WeightConversorTest {
         double esperado = 0.0;
 
         // Act
-        double resultado = conversor.convertirGramos_Libras(gramos);
+        double resultado = conversor.gramosALibras(gramos);
 
         // Assert
         assertEquals(esperado, resultado, DELTA);
@@ -62,7 +62,7 @@ class WeightConversorTest {
         double esperado = 2204.622622;
 
         // Act
-        double resultado = conversor.convertirGramos_Libras(gramos);
+        double resultado = conversor.gramosALibras(gramos);
 
         // Assert
         assertEquals(esperado, resultado, 0.001);
@@ -76,7 +76,7 @@ class WeightConversorTest {
         double esperado = 0.00220462;
 
         // Act
-        double resultado = conversor.convertirGramos_Libras(gramos);
+        double resultado = conversor.gramosALibras(gramos);
 
         // Assert
         assertEquals(esperado, resultado, 0.00001);
@@ -89,7 +89,7 @@ class WeightConversorTest {
         double gramos = -50.0;
 
         // Act
-        Executable operacion = () -> conversor.convertirGramos_Libras(gramos);
+        Executable operacion = () -> conversor.gramosALibras(gramos);
 
         // Assert
         assertThrows(IllegalArgumentException.class, operacion);
@@ -102,7 +102,7 @@ class WeightConversorTest {
         double gramos = Double.NaN;
 
         // Act
-        Executable operacion = () -> conversor.convertirGramos_Libras(gramos);
+        Executable operacion = () -> conversor.gramosALibras(gramos);
 
         // Assert
         assertThrows(IllegalArgumentException.class, operacion);
@@ -115,7 +115,7 @@ class WeightConversorTest {
         double gramos = Double.POSITIVE_INFINITY;
 
         // Act
-        Executable operacion = () -> conversor.convertirGramos_Libras(gramos);
+        Executable operacion = () -> conversor.gramosALibras(gramos);
 
         // Assert
         assertThrows(IllegalArgumentException.class, operacion);
@@ -128,7 +128,7 @@ class WeightConversorTest {
         double gramos = Double.NEGATIVE_INFINITY;
 
         // Act
-        Executable operacion = () -> conversor.convertirGramos_Libras(gramos);
+        Executable operacion = () -> conversor.gramosALibras(gramos);
 
         // Assert
         assertThrows(IllegalArgumentException.class, operacion);
@@ -146,7 +146,7 @@ class WeightConversorTest {
         double esperado = 453.59237;
 
         // Act
-        double resultado = conversor.convertirLibras_Gramos(libras);
+        double resultado = conversor.librasAGramos(libras);
 
         // Assert
         assertEquals(esperado, resultado, DELTA);
@@ -160,7 +160,7 @@ class WeightConversorTest {
         double esperado = 0.0;
 
         // Act
-        double resultado = conversor.convertirLibras_Gramos(libras);
+        double resultado = conversor.librasAGramos(libras);
 
         // Assert
         assertEquals(esperado, resultado, DELTA);
@@ -174,7 +174,7 @@ class WeightConversorTest {
         double esperado = 1_000_000.0;
 
         // Act
-        double resultado = conversor.convertirLibras_Gramos(libras);
+        double resultado = conversor.librasAGramos(libras);
 
         // Assert
         assertEquals(esperado, resultado, 0.1);
@@ -187,7 +187,7 @@ class WeightConversorTest {
         double libras = -1.0;
 
         // Act
-        Executable operacion = () -> conversor.convertirLibras_Gramos(libras);
+        Executable operacion = () -> conversor.librasAGramos(libras);
 
         // Assert
         assertThrows(IllegalArgumentException.class, operacion);
@@ -200,7 +200,7 @@ class WeightConversorTest {
         double libras = Double.NaN;
 
         // Act
-        Executable operacion = () -> conversor.convertirLibras_Gramos(libras);
+        Executable operacion = () -> conversor.librasAGramos(libras);
 
         // Assert
         assertThrows(IllegalArgumentException.class, operacion);
@@ -213,7 +213,7 @@ class WeightConversorTest {
         double libras = Double.POSITIVE_INFINITY;
 
         // Act
-        Executable operacion = () -> conversor.convertirLibras_Gramos(libras);
+        Executable operacion = () -> conversor.librasAGramos(libras);
 
         // Assert
         assertThrows(IllegalArgumentException.class, operacion);
@@ -230,8 +230,8 @@ class WeightConversorTest {
         double gramosOriginal = 750.0;
 
         // Act
-        double libras = conversor.convertirGramos_Libras(gramosOriginal);
-        double gramosFinal = conversor.convertirLibras_Gramos(libras);
+        double libras = conversor.gramosALibras(gramosOriginal);
+        double gramosFinal = conversor.librasAGramos(libras);
 
         // Assert
         assertEquals(gramosOriginal, gramosFinal, DELTA);
@@ -244,8 +244,8 @@ class WeightConversorTest {
         double librasOriginal = 5.5;
 
         // Act
-        double gramos = conversor.convertirLibras_Gramos(librasOriginal);
-        double librasFinal = conversor.convertirGramos_Libras(gramos);
+        double gramos = conversor.librasAGramos(librasOriginal);
+        double librasFinal = conversor.gramosALibras(gramos);
 
         // Assert
         assertEquals(librasOriginal, librasFinal, DELTA);

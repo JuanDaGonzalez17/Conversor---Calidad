@@ -1,4 +1,4 @@
-package Conversor;
+package com.udea.conversor.domain;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -15,8 +15,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * an acceptable time budget. They are tagged "performance" so they can be excluded
  * from routine unit-test runs and executed separately, e.g.:
  *
- *   mvn test -Dgroups="performance"          (to run only these)
- *   mvn test -DexcludedGroups="performance"  (to skip these in normal builds)
+ *   ./gradlew performanceTest   (to run only these)
+ *   ./gradlew test              (excludes them automatically)
  *
  * Thresholds are intentionally generous to avoid flaky failures on slower CI machines;
  * tighten them if you need stricter performance guarantees.
@@ -34,7 +34,7 @@ class TemperatureConversorPerformanceTest {
     }
 
     @Test
-    @DisplayName("Rendimiento: 1M conversiones Celsius a Fahrenheit deben completarse en menos de 2s")
+    @DisplayName("Rendimiento: 1M conversiones Celsius a Fahrenheit deben completarse en menos de 500 ms")
     void testRendimiento_CelsiusAFahrenheit() {
         // Arrange
         double celsius = 25.0;
@@ -42,7 +42,7 @@ class TemperatureConversorPerformanceTest {
         // Act
         long inicio = System.nanoTime();
         for (int i = 0; i < ITERACIONES; i++) {
-            conversor.convertirCelsius_Farenheit(celsius);
+            conversor.celsiusAFahrenheit(celsius);
         }
         long finMs = (System.nanoTime() - inicio) / 1_000_000;
 
@@ -52,7 +52,7 @@ class TemperatureConversorPerformanceTest {
     }
 
     @Test
-    @DisplayName("Rendimiento: 1M conversiones Fahrenheit a Celsius deben completarse en menos de 2s")
+    @DisplayName("Rendimiento: 1M conversiones Fahrenheit a Celsius deben completarse en menos de 500 ms")
     void testRendimiento_FahrenheitACelsius() {
         // Arrange
         double fahrenheit = 77.0;
@@ -60,7 +60,7 @@ class TemperatureConversorPerformanceTest {
         // Act
         long inicio = System.nanoTime();
         for (int i = 0; i < ITERACIONES; i++) {
-            conversor.convertirFahrenheit_Celsius(fahrenheit);
+            conversor.fahrenheitACelsius(fahrenheit);
         }
         long finMs = (System.nanoTime() - inicio) / 1_000_000;
 
@@ -70,7 +70,7 @@ class TemperatureConversorPerformanceTest {
     }
 
     @Test
-    @DisplayName("Rendimiento: 1M conversiones Fahrenheit a Kelvin deben completarse en menos de 2s")
+    @DisplayName("Rendimiento: 1M conversiones Fahrenheit a Kelvin deben completarse en menos de 500 ms")
     void testRendimiento_FahrenheitAKelvin() {
         // Arrange
         double fahrenheit = 32.0;
@@ -78,7 +78,7 @@ class TemperatureConversorPerformanceTest {
         // Act
         long inicio = System.nanoTime();
         for (int i = 0; i < ITERACIONES; i++) {
-            conversor.convertirFahrenheit_Kelvin(fahrenheit);
+            conversor.fahrenheitAKelvin(fahrenheit);
         }
         long finMs = (System.nanoTime() - inicio) / 1_000_000;
 
@@ -88,7 +88,7 @@ class TemperatureConversorPerformanceTest {
     }
 
     @Test
-    @DisplayName("Rendimiento: 1M conversiones Celsius a Kelvin deben completarse en menos de 2s")
+    @DisplayName("Rendimiento: 1M conversiones Celsius a Kelvin deben completarse en menos de 500 ms")
     void testRendimiento_CelsiusAKelvin() {
         // Arrange
         double celsius = 0.0;
@@ -96,7 +96,7 @@ class TemperatureConversorPerformanceTest {
         // Act
         long inicio = System.nanoTime();
         for (int i = 0; i < ITERACIONES; i++) {
-            conversor.convertirCelsius_Kelvin(celsius);
+            conversor.celsiusAKelvin(celsius);
         }
         long finMs = (System.nanoTime() - inicio) / 1_000_000;
 
@@ -106,7 +106,7 @@ class TemperatureConversorPerformanceTest {
     }
 
     @Test
-    @DisplayName("Rendimiento: 1M conversiones Kelvin a Celsius deben completarse en menos de 2s")
+    @DisplayName("Rendimiento: 1M conversiones Kelvin a Celsius deben completarse en menos de 500 ms")
     void testRendimiento_KelvinACelsius() {
         // Arrange
         double kelvin = 273.15;
@@ -114,7 +114,7 @@ class TemperatureConversorPerformanceTest {
         // Act
         long inicio = System.nanoTime();
         for (int i = 0; i < ITERACIONES; i++) {
-            conversor.convertirKelvin_Celsius(kelvin);
+            conversor.kelvinACelsius(kelvin);
         }
         long finMs = (System.nanoTime() - inicio) / 1_000_000;
 
@@ -124,7 +124,7 @@ class TemperatureConversorPerformanceTest {
     }
 
     @Test
-    @DisplayName("Rendimiento: 1M conversiones Kelvin a Fahrenheit deben completarse en menos de 2s")
+    @DisplayName("Rendimiento: 1M conversiones Kelvin a Fahrenheit deben completarse en menos de 500 ms")
     void testRendimiento_KelvinAFahrenheit() {
         // Arrange
         double kelvin = 273.15;
@@ -132,7 +132,7 @@ class TemperatureConversorPerformanceTest {
         // Act
         long inicio = System.nanoTime();
         for (int i = 0; i < ITERACIONES; i++) {
-            conversor.convertirKelvin_Fahrenheit(kelvin);
+            conversor.kelvinAFahrenheit(kelvin);
         }
         long finMs = (System.nanoTime() - inicio) / 1_000_000;
 
@@ -151,12 +151,12 @@ class TemperatureConversorPerformanceTest {
         // Act
         long inicio = System.nanoTime();
         for (int i = 0; i < iteracionesPorMetodo; i++) {
-            conversor.convertirCelsius_Farenheit(20.0);
-            conversor.convertirFahrenheit_Celsius(68.0);
-            conversor.convertirFahrenheit_Kelvin(68.0);
-            conversor.convertirCelsius_Kelvin(20.0);
-            conversor.convertirKelvin_Celsius(293.15);
-            conversor.convertirKelvin_Fahrenheit(293.15);
+            conversor.celsiusAFahrenheit(20.0);
+            conversor.fahrenheitACelsius(68.0);
+            conversor.fahrenheitAKelvin(68.0);
+            conversor.celsiusAKelvin(20.0);
+            conversor.kelvinACelsius(293.15);
+            conversor.kelvinAFahrenheit(293.15);
         }
         long finMs = (System.nanoTime() - inicio) / 1_000_000;
 
