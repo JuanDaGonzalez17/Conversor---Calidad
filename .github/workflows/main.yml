@@ -19,7 +19,7 @@ jobs:
           distribution: temurin
           java-version: 21     # cambia a tu versión
 
-      - uses: gradle/actions/setup-gradle@v4
+      - uses: gradle/actions/setup-gradle@9c971963bec38e04b3d30dcc455b5382be2fdbfb
 
       - name: Permisos a gradlew
         run: chmod +x gradlew
@@ -50,14 +50,14 @@ jobs:
 
       # 4. Guardar artefacto y reportes
       - name: Subir artefacto
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@9c971963bec38e04b3d30dcc455b5382be2fdbfb
         with:
           name: app-jar
           path: build/libs/*.jar
 
       - name: Subir reportes
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@9c971963bec38e04b3d30dcc455b5382be2fdbfb
         with:
           name: reportes
           path: |
